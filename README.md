@@ -36,7 +36,8 @@ python3 -m http.server 8000
    timestamps from the word timings.
 4. `ffmpeg` cut each clip with a little padding and applied loudness
    normalisation (`loudnorm I=-16`) so every button plays at a consistent
-   volume, exporting 128 kbps MP3s.
+   volume, exporting 128 kbps MP3s. The scripts used for steps 2-4 are in
+   [`scripts/`](scripts/).
 
 ## Credits
 
