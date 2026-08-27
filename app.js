@@ -29,6 +29,7 @@
     { id: "stop-it", label: "Stop it!", emoji: "✋", group: "sass" },
 
     // 🌙 Sleepy time
+    { id: "time-for-bed", label: "Time for bed, you two!", emoji: "📣", group: "sleepy" },
     { id: "good-night", label: "Have a good night!", emoji: "🌙", group: "sleepy" },
     { id: "go-to-bed", label: "I have to go to bed", emoji: "🛏️", group: "sleepy" },
     { id: "back-to-sleep", label: "I'm really really tired…", emoji: "😴", group: "sleepy" },

@@ -16,7 +16,7 @@ python3 -m http.server 8000
 
 ## Features
 
-- **29 sound clips** organised into four sections: the "WHAT THE—?!"
+- **30 sound clips** organised into four sections: the "WHAT THE—?!"
   collection, Classics, Maximum Sass, and Sleepy Time (sleep & bedtime
   moments, straight from the slumber-party episode)
 - **Web Audio API** playback for low-latency, overlapping sounds, with an
