@@ -27,12 +27,25 @@
     { id: "leave-me-alone", label: "Leave me alone!", emoji: "🚪", group: "sass" },
     { id: "get-out", label: "Get out!", emoji: "👉", group: "sass" },
     { id: "stop-it", label: "Stop it!", emoji: "✋", group: "sass" },
+
+    // 🌙 Sleepy time
+    { id: "good-night", label: "Have a good night!", emoji: "🌙", group: "sleepy" },
+    { id: "go-to-bed", label: "I have to go to bed", emoji: "🛏️", group: "sleepy" },
+    { id: "back-to-sleep", label: "I'm really really tired…", emoji: "😴", group: "sleepy" },
+    { id: "take-a-nap", label: "About to take a nap!", emoji: "💤", group: "sleepy" },
+    { id: "wake-up", label: "Hey, wake up!", emoji: "⏰", group: "sleepy" },
+    { id: "fell-asleep", label: "I almost fell asleep…", emoji: "🥱", group: "sleepy" },
+    { id: "right-to-sleep", label: "Fell right to sleep!", emoji: "👶", group: "sleepy" },
+    { id: "slumber-party", label: "Bestest slumber party EVER!", emoji: "🎉", group: "sleepy" },
+    { id: "first-sleepover", label: "My first sleepover!", emoji: "🏠", group: "sleepy" },
+    { id: "pajamas", label: "Still in my pajamas!", emoji: "🩳", group: "sleepy" },
   ];
 
   const grids = {
     whatthe: document.getElementById("grid-whatthe"),
     classics: document.getElementById("grid-classics"),
     sass: document.getElementById("grid-sass"),
+    sleepy: document.getElementById("grid-sleepy"),
   };
 
   let audioCtx = null;
