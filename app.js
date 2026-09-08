@@ -64,6 +64,10 @@
     { id: "zh-xiexie-guanzhu", label: "谢谢关注", pinyin: "xièxie guānzhù", en: "Thanks for following!", emoji: "➕", group: "sisi-live", board: 1 },
     { id: "zh-xiexie-xiongdi", label: "谢谢兄弟们的关注", pinyin: "xièxie xiōngdìmen de guānzhù", en: "Thanks for the follow, bros!", emoji: "🤝", group: "sisi-live", board: 1 },
     { id: "zh-xiexie-dajia", label: "谢谢大家的喜欢", pinyin: "xièxie dàjiā de xǐhuan", en: "Thanks for all the love!", emoji: "💜", group: "sisi-live", board: 1 },
+
+    // ═══ Board 2: Last Asylum: Plague (local-only assets — see scripts/extract_asylum_sfx.py) ═══
+    { id: "game-battle-win", label: "Battle won!", emoji: "🏆", group: "asylum", board: 2, localOnly: true },
+    { id: "game-battle-loss", label: "Battle lost…", emoji: "💀", group: "asylum", board: 2, localOnly: true },
   ];
 
   const grids = {
@@ -73,7 +77,9 @@
     sleepy: document.getElementById("grid-sleepy"),
     "sisi-sig": document.getElementById("grid-sisi-sig"),
     "sisi-live": document.getElementById("grid-sisi-live"),
+    asylum: document.getElementById("grid-asylum"),
   };
+  const NUM_BOARDS = 3;
 
   let audioCtx = null;
   const buffers = new Map();
@@ -147,6 +153,29 @@
     allButtons.push({ sound, btn });
   }
 
+  // Local-only sounds (not distributed with the site): grey out any that
+  // aren't present, and reveal the how-to note if some are missing.
+  Promise.all(
+    allButtons
+      .filter((b) => b.sound.localOnly)
+      .map(async (b) => {
+        let ok = false;
+        try {
+          ok = (await fetch(`sounds/${b.sound.id}.mp3`, { method: "HEAD" })).ok;
+        } catch (err) { /* leave missing */ }
+        if (!ok) {
+          b.missing = true;
+          b.btn.classList.add("missing");
+          b.btn.disabled = true;
+          b.btn.insertAdjacentHTML("beforeend", `<span class="en">extract locally to enable</span>`);
+        }
+        return ok;
+      })
+  ).then((results) => {
+    const note = document.getElementById("asylum-note");
+    if (note && results.some((ok) => !ok)) note.hidden = false;
+  });
+
   // ── Board switching: scroll-snap swiping + tabs kept in sync ──
   const boards = document.getElementById("boards");
   const tabs = [...document.querySelectorAll(".tab")];
@@ -156,6 +185,7 @@
     activeBoard = i;
     tabs.forEach((t, j) => t.classList.toggle("active", j === i));
     document.body.classList.toggle("theme-sisi", i === 1);
+    document.body.classList.toggle("theme-asylum", i === 2);
   }
 
   tabs.forEach((tab) =>
@@ -171,12 +201,13 @@
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(() => {
       const i = Math.round(boards.scrollLeft / boards.clientWidth);
-      if (i !== activeBoard) setActiveTab(Math.max(0, Math.min(1, i)));
+      if (i !== activeBoard) setActiveTab(Math.max(0, Math.min(NUM_BOARDS - 1, i)));
     }, 80);
   }, { passive: true });
 
   document.getElementById("random-btn").addEventListener("click", () => {
-    const pool = allButtons.filter((b) => b.sound.board === activeBoard);
+    const pool = allButtons.filter((b) => b.sound.board === activeBoard && !b.missing);
+    if (!pool.length) return;
     const pick = pool[Math.floor(Math.random() * pool.length)];
     pick.btn.scrollIntoView({ block: "nearest", behavior: "smooth" });
     play(pick.sound.id, pick.btn);
@@ -185,7 +216,7 @@
   // Warm the cache after the first user gesture (autoplay policies require one)
   const warm = () => {
     ensureContext();
-    SOUNDS.forEach((s) => loadBuffer(s.id));
+    allButtons.forEach((b) => { if (!b.missing) loadBuffer(b.sound.id); });
     window.removeEventListener("pointerdown", warm);
   };
   window.addEventListener("pointerdown", warm, { once: true });

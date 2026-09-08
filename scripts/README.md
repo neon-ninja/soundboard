@@ -56,3 +56,13 @@ Reels have no captions, so this pipeline transcribes them locally:
 5. `verify_wide.py` — sanity-checks a cut by re-transcribing a ±2.5 s
    window around it and asserting the phrase is present; clips that
    failed this check were re-cut from other occurrences or dropped.
+
+## Last Asylum: Plague (Asylum board)
+
+`extract_asylum_sfx.py` extracts the battle win/loss jingles from the
+game's Wwise soundbank (APK download via apkeep, DIDX/DATA carving,
+vgmstream decode, ffmpeg loudnorm). The extracted audio is the game
+developer's copyrighted material, so the repo ships the tooling only:
+run the script locally and the Asylum board's buttons light up.
+`sounds/game-*.mp3` is gitignored; committing the results is your
+decision to make, not this repo's default.

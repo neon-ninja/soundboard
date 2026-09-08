@@ -13,6 +13,7 @@
     <nav class="tabs" aria-label="Choose a soundboard">
       <button class="tab active" id="tab-aphmau" data-board="0">🐾 Aphmau</button>
       <button class="tab" id="tab-sisi" data-board="1">🥢 思思</button>
+      <button class="tab" id="tab-asylum" data-board="2">🎮 Asylum</button>
     </nav>
     <p class="tagline">Tap a button. Swipe to switch boards.</p>
   </header>
@@ -51,6 +52,23 @@
       </div>
       <footer class="footer">
         <p>Clips from 思思 (@xiexie888888) on Instagram &middot; hanzi + pinyin + English</p>
+      </footer>
+    </section>
+
+    <section class="board board-asylum" aria-label="Last Asylum soundboard">
+      <div class="section">
+        <h2 class="section-title">⚔️ Battle Results</h2>
+        <div class="grid grid-featured" id="grid-asylum"></div>
+      </div>
+      <div class="section">
+        <p class="board-note" id="asylum-note" hidden>
+          These sounds aren't bundled with the site — they're game assets from
+          <em>Last Asylum: Plague</em>. Run <code>scripts/extract_asylum_sfx.py</code>
+          locally to extract them yourself and the buttons will light up.
+        </p>
+      </div>
+      <footer class="footer">
+        <p>Sound effects extracted locally from <em>Last Asylum: Plague</em> (not distributed with this site)</p>
       </footer>
     </section>
   </main>

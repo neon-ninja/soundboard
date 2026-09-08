@@ -82,11 +82,12 @@ body.theme-sisi {
   color: var(--text-dim);
   font: inherit;
   font-weight: 700;
-  font-size: 1rem;
-  padding: 10px 22px;
+  font-size: clamp(0.85rem, 3.5vw, 1rem);
+  padding: 10px clamp(12px, 4vw, 22px);
   border-radius: 999px;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .tab.active {
@@ -130,6 +131,62 @@ body.theme-sisi .tab.active {
   --accent-2: #ff5f5f;
   --card: #4a2430;
   --card-hi: #5c2f3c;
+}
+
+.board-asylum {
+  --accent: #6fe3b0;
+  --accent-2: #3aa07a;
+  --card: #16302a;
+  --card-hi: #1f4038;
+}
+
+body.theme-asylum {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(111, 227, 176, 0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(58, 160, 122, 0.10), transparent 60%),
+    linear-gradient(180deg, #0f2420, #0a1512 55%);
+  background-attachment: fixed;
+}
+
+body.theme-asylum .tab.active {
+  background: linear-gradient(135deg, #3aa07a, #6fe3b0);
+  box-shadow: 0 4px 14px rgba(111, 227, 176, 0.35);
+}
+
+body.theme-asylum .fab {
+  background: linear-gradient(150deg, #3aa07a, #6fe3b0);
+  box-shadow: 0 8px 24px rgba(111, 227, 176, 0.35);
+}
+
+.board-asylum .grid-featured .sound-btn {
+  background: linear-gradient(160deg, #1f4a3e, #142e27);
+  border-color: rgba(111, 227, 176, 0.35);
+}
+
+.board-asylum .sound-btn.playing {
+  box-shadow: 0 0 0 2px rgba(111, 227, 176, 0.6), 0 8px 24px var(--shadow);
+}
+
+.sound-btn.missing {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+.board-note {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.board-note code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.8rem;
 }
 
 .board-sisi .sound-btn {
