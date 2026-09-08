@@ -122,6 +122,23 @@ main {
   text-align: center;
 }
 
+.sound-btn .pinyin {
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--accent);
+  text-align: center;
+  margin-top: -4px;
+}
+
+.sound-btn .en {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: -4px;
+}
+
 .sound-btn:active {
   transform: scale(0.94);
   box-shadow: 0 2px 8px var(--shadow);

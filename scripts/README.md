@@ -40,3 +40,19 @@ clips*/                    # output MP3s
 
 The search scripts are read-only and safe to re-run; the cut scripts
 overwrite their output MP3s.
+
+## Instagram / Mandarin pipeline (思思 section)
+
+Reels have no captions, so this pipeline transcribes them locally:
+
+1. Download reels with `yt-dlp --cookies <cookies.txt> -a <url-list>`
+   (a logged-in Instagram session is required; cookies are never committed).
+2. `transcribe_all.py` — faster-whisper (small, int8, CPU) Mandarin
+   transcription of every downloaded reel, word timestamps included.
+3. `mine_phrases.py` — character n-gram mining across all transcripts to
+   surface phrases repeated in many reels.
+4. `cut_zh.py` — clip table + ffmpeg cutting (same silence-trim +
+   loudnorm chain as the Aphmau clips).
+5. `verify_wide.py` — sanity-checks a cut by re-transcribing a ±2.5 s
+   window around it and asserting the phrase is present; clips that
+   failed this check were re-cut from other occurrences or dropped.

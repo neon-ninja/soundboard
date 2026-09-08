@@ -40,6 +40,23 @@
     { id: "slumber-party", label: "Bestest slumber party EVER!", emoji: "🎉", group: "sleepy" },
     { id: "first-sleepover", label: "My first sleepover!", emoji: "🏠", group: "sleepy" },
     { id: "pajamas", label: "Still in my pajamas!", emoji: "🩳", group: "sleepy" },
+
+    // 🥢 思思 (xiexie888888) — Mandarin + signature English intro
+    { id: "zh-full-intro", label: "Hey boy, thank you girl…", emoji: "🎤", group: "sisi", en: "Her full signature intro" },
+    { id: "zh-hey-boy", label: "Hey boy, thank you girl!", emoji: "👋", group: "sisi", en: "Signature opener" },
+    { id: "zh-listen-to-me", label: "Listen to me!", emoji: "👂", group: "sisi", en: "Signature opener, pt. 2" },
+    { id: "zh-i-wanna-tell-you", label: "I wanna tell you…", emoji: "🗣️", group: "sisi", en: "Signature opener, pt. 3" },
+    { id: "zh-xiexie-guanzhu", label: "谢谢关注", pinyin: "xièxie guānzhù", en: "Thanks for following!", emoji: "➕", group: "sisi" },
+    { id: "zh-xiexie-xiongdi", label: "谢谢兄弟们的关注", pinyin: "xièxie xiōngdìmen de guānzhù", en: "Thanks for the follow, bros!", emoji: "🤝", group: "sisi" },
+    { id: "zh-xiexie-dajia", label: "谢谢大家的喜欢", pinyin: "xièxie dàjiā de xǐhuan", en: "Thanks for all the love!", emoji: "💜", group: "sisi" },
+    { id: "zh-wa-sai", label: "哇塞！", pinyin: "wāsài!", en: "Whoa!!", emoji: "🤩", group: "sisi" },
+    { id: "zh-chaoji-wudi", label: "超级无敌大的财神爷", pinyin: "chāojí wúdí dà de cáishényé", en: "A super-duper-HUGE God of Wealth!", emoji: "🧧", group: "sisi" },
+    { id: "zh-hao-xiang-ya", label: "好香呀", pinyin: "hǎo xiāng ya", en: "Smells SO good!", emoji: "🍜", group: "sisi" },
+    { id: "zh-gei-ni-chi", label: "给你吃个好东西", pinyin: "gěi nǐ chī ge hǎo dōngxi", en: "Here, try something good!", emoji: "🥢", group: "sisi" },
+    { id: "zh-shide-shide", label: "对对对，是的是的", pinyin: "duì duì duì, shì de shì de", en: "Right right, yes yes!", emoji: "👌", group: "sisi" },
+    { id: "zh-kandaole-ma", label: "看到了吗？", pinyin: "kàndào le ma?", en: "Did you see that?", emoji: "🔍", group: "sisi" },
+    { id: "zh-duoshao-qian", label: "多少钱？", pinyin: "duōshao qián?", en: "How much?", emoji: "💰", group: "sisi" },
+    { id: "zh-gei-dajia-kan", label: "我给大家看一下", pinyin: "wǒ gěi dàjiā kàn yíxià", en: "Let me show you all!", emoji: "📸", group: "sisi" },
   ];
 
   const grids = {
@@ -47,6 +64,7 @@
     classics: document.getElementById("grid-classics"),
     sass: document.getElementById("grid-sass"),
     sleepy: document.getElementById("grid-sleepy"),
+    sisi: document.getElementById("grid-sisi"),
   };
 
   let audioCtx = null;
@@ -112,8 +130,11 @@
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "sound-btn";
-    btn.innerHTML = `<span class="emoji" aria-hidden="true">${sound.emoji}</span><span class="label">${sound.label}</span>`;
-    btn.setAttribute("aria-label", `Play: ${sound.label}`);
+    let inner = `<span class="emoji" aria-hidden="true">${sound.emoji}</span><span class="label">${sound.label}</span>`;
+    if (sound.pinyin) inner += `<span class="pinyin">${sound.pinyin}</span>`;
+    if (sound.en) inner += `<span class="en">${sound.en}</span>`;
+    btn.innerHTML = inner;
+    btn.setAttribute("aria-label", `Play: ${sound.en || sound.label}`);
     btn.addEventListener("click", () => play(sound.id, btn));
     grids[sound.group].appendChild(btn);
     allButtons.push({ sound, btn });

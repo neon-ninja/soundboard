@@ -16,9 +16,11 @@ python3 -m http.server 8000
 
 ## Features
 
-- **30 sound clips** organised into four sections: the "WHAT THE—?!"
-  collection, Classics, Maximum Sass, and Sleepy Time (sleep & bedtime
-  moments, straight from the slumber-party episode)
+- **45 sound clips** organised into five sections: the "WHAT THE—?!"
+  collection, Classics, Maximum Sass, Sleepy Time (sleep & bedtime
+  moments, straight from the slumber-party episode), and 思思 (xiexie888888)
+  — Mandarin catchphrases from Instagram reels, labelled with hanzi, pinyin,
+  and English, transcribed with faster-whisper
 - **Web Audio API** playback for low-latency, overlapping sounds, with an
   `<audio>` element fallback
 - **Mobile-first design**: big touch targets, tap animations, haptic feedback
