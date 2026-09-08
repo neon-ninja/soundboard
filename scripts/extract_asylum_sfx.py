@@ -9,15 +9,14 @@ to make (and your jurisdiction's), not this script's.
 Steps it performs:
  1. Downloads the game XAPK from APKPure via `apkeep`
     (https://github.com/EFForg/apkeep), unless --xapk is given.
- 2. Unzips the asset pack and locates the Wwise soundbank scene_2024.bnk.
- 3. Parses the bank's DIDX/DATA sections and carves out the two embedded
-    .wem media files (IDs from SoundbanksInfo.json):
-        910607432  -> win_ver_18.wav      (battle win,  ~1.0 s)
-        1020441531 -> lose_3_ver_2.wav    (battle loss, ~1.3 s)
+ 2. Unzips the asset pack and locates the Wwise soundbanks (scene_2024.bnk
+    and sfx_2024.bnk).
+ 3. Parses each bank's DIDX/DATA sections and carves out the embedded .wem
+    media files listed in TARGETS below — battle win/loss jingles plus a
+    dozen short interaction effects (chest open, rewards, coins, level-up,
+    unlocks, UI click…), all identified via the game's SoundbanksInfo.json.
  4. Decodes them with vgmstream-cli (https://vgmstream.org) and encodes
-    loudness-normalised MP3s with ffmpeg into sounds/:
-        sounds/game-battle-win.mp3
-        sounds/game-battle-loss.mp3
+    loudness-normalised MP3s with ffmpeg into sounds/game-*.mp3.
 
 Prerequisites on PATH: apkeep (step 1 only), vgmstream-cli, ffmpeg.
 
@@ -31,10 +30,26 @@ exist. sounds/game-*.mp3 is gitignored by default; remove that line from
 import argparse, os, shutil, struct, subprocess, sys, tempfile, zipfile
 
 PACKAGE = "com.phs.global"
-BANK_PATH = "assets/CustomDatas/Audio/GeneratedSoundBanks/Android/scene_2024.bnk"
+BANK_DIR = "assets/CustomDatas/Audio/GeneratedSoundBanks/Android"
+# bank file -> {wwise media id: output basename}
+# ids/names come from the game's own SoundbanksInfo.json (event -> media map)
 TARGETS = {
-    910607432: "game-battle-win",
-    1020441531: "game-battle-loss",
+    "scene_2024.bnk": {
+        910607432: "game-battle-win",     # win_ver_18.wav          ~1.0s
+        1020441531: "game-battle-loss",   # lose_3_ver_2.wav        ~1.3s
+    },
+    "sfx_2024.bnk": {
+        777978140: "game-chest-open",     # box_open_ver_18.wav     ~1.0s
+        495340830: "game-get-reward",     # get_reward_ver_17.wav   ~2.9s
+        91809598: "game-get-coin",        # item_fly_get_coin       ~0.5s
+        315840682: "game-get-star",       # item_fly_get_star       ~1.3s
+        1073572823: "game-level-up",      # menu_fade_in_level_up_3 ~1.7s
+        235607711: "game-hero-unlock",    # eft_unlock_ver_7.wav    ~0.5s
+        175008223: "game-feature-unlock", # feature_unlock_ver_18   ~2.7s
+        235809080: "game-build-finish",   # eft_level_up_2_ver_18   ~2.4s
+        885733322: "game-click",          # common_click_ver_18     ~0.1s
+        239329685: "game-map-unlock",     # eft_map_unlock_ver_18   ~1.4s
+    },
 }
 LOUDNORM = "loudnorm=I=-16:TP=-1.5:LRA=11"
 
@@ -54,8 +69,8 @@ def download_xapk(workdir):
     return path
 
 
-def carve_bank(bank_bytes):
-    """Parse Wwise .bnk sections; return {media_id: wem_bytes} for TARGETS."""
+def carve_bank(bank_bytes, wanted_ids):
+    """Parse Wwise .bnk sections; return {media_id: wem_bytes} for wanted_ids."""
     out, pos = {}, 0
     didx, data = None, None
     while pos + 8 <= len(bank_bytes):
@@ -71,7 +86,7 @@ def carve_bank(bank_bytes):
         sys.exit("error: bank has no DIDX/DATA sections — format changed?")
     for i in range(0, len(didx), 12):
         media_id, offset, length = struct.unpack_from("<III", didx, i)
-        if media_id in TARGETS:
+        if media_id in wanted_ids:
             out[media_id] = data[offset:offset + length]
     return out
 
@@ -95,26 +110,25 @@ def main():
                 with open(inner_path, "wb") as f:
                     shutil.copyfileobj(inner, f)
         with zipfile.ZipFile(inner_path) as z:
-            bank = z.read(BANK_PATH)
-
-        print("carving wems from soundbank…")
-        wems = carve_bank(bank)
-        missing = set(TARGETS) - set(wems)
-        if missing:
-            sys.exit(f"error: media ids not found in bank: {missing}")
-
-        for media_id, name in TARGETS.items():
-            wem = os.path.join(tmp, f"{media_id}.wem")
-            wav = os.path.join(tmp, f"{media_id}.wav")
-            with open(wem, "wb") as f:
-                f.write(wems[media_id])
-            subprocess.run(["vgmstream-cli", "-o", wav, wem], check=True,
-                           stdout=subprocess.DEVNULL)
-            out = os.path.join(args.outdir, f"{name}.mp3")
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", wav,
-                            "-af", LOUDNORM, "-ar", "44100", "-b:a", "128k", out],
-                           check=True)
-            print(f"  wrote {out}")
+            for bank_file, targets in TARGETS.items():
+                bank = z.read(f"{BANK_DIR}/{bank_file}")
+                print(f"carving {len(targets)} wems from {bank_file}…")
+                wems = carve_bank(bank, set(targets))
+                missing = set(targets) - set(wems)
+                if missing:
+                    sys.exit(f"error: media ids not found in {bank_file}: {missing}")
+                for media_id, name in targets.items():
+                    wem = os.path.join(tmp, f"{media_id}.wem")
+                    wav = os.path.join(tmp, f"{media_id}.wav")
+                    with open(wem, "wb") as f:
+                        f.write(wems[media_id])
+                    subprocess.run(["vgmstream-cli", "-o", wav, wem], check=True,
+                                   stdout=subprocess.DEVNULL)
+                    out = os.path.join(args.outdir, f"{name}.mp3")
+                    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", wav,
+                                    "-af", LOUDNORM, "-ar", "44100", "-b:a", "128k", out],
+                                   check=True)
+                    print(f"  wrote {out}")
 
     print("done — reload the soundboard and the Asylum board will light up.")
 

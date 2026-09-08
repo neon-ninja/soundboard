@@ -59,7 +59,8 @@ Reels have no captions, so this pipeline transcribes them locally:
 
 ## Last Asylum: Plague (Asylum board)
 
-`extract_asylum_sfx.py` extracts the battle win/loss jingles from the
+`extract_asylum_sfx.py` extracts the battle win/loss jingles and a dozen
+short interaction effects (chest open, coins, level-up, unlocks…) from the
 game's Wwise soundbank (APK download via apkeep, DIDX/DATA carving,
 vgmstream decode, ffmpeg loudnorm). The extracted audio is the game
 developer's copyrighted material, so the repo ships the tooling only:

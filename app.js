@@ -68,6 +68,16 @@
     // ═══ Board 2: Last Asylum: Plague (local-only assets — see scripts/extract_asylum_sfx.py) ═══
     { id: "game-battle-win", label: "Battle won!", emoji: "🏆", group: "asylum", board: 2, localOnly: true },
     { id: "game-battle-loss", label: "Battle lost…", emoji: "💀", group: "asylum", board: 2, localOnly: true },
+    { id: "game-chest-open", label: "Chest open!", emoji: "📦", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-get-reward", label: "Reward!", emoji: "🎁", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-get-coin", label: "Coins!", emoji: "🪙", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-get-star", label: "Star get!", emoji: "⭐", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-level-up", label: "Level up!", emoji: "⬆️", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-hero-unlock", label: "Hero unlocked!", emoji: "🗝️", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-feature-unlock", label: "Feature unlocked!", emoji: "✨", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-build-finish", label: "Build complete!", emoji: "🏗️", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-click", label: "Click", emoji: "🔘", group: "asylum-sfx", board: 2, localOnly: true },
+    { id: "game-map-unlock", label: "Map unlocked!", emoji: "🗺️", group: "asylum-sfx", board: 2, localOnly: true },
   ];
 
   const grids = {
@@ -78,6 +88,7 @@
     "sisi-sig": document.getElementById("grid-sisi-sig"),
     "sisi-live": document.getElementById("grid-sisi-live"),
     asylum: document.getElementById("grid-asylum"),
+    "asylum-sfx": document.getElementById("grid-asylum-sfx"),
   };
   const NUM_BOARDS = 3;
 
