@@ -16,7 +16,9 @@ python3 -m http.server 8000
 
 ## Features
 
-- **48 sound clips** organised into five sections: the "WHAT THE—?!"
+- **Two swipeable boards** — Aphmau (purple) and 思思 (red-gold) — switch
+  via the tabs or by swiping horizontally (CSS scroll-snap)
+- **48 sound clips** organised into sections: the "WHAT THE—?!"
   collection, Classics, Maximum Sass, Sleepy Time (sleep & bedtime
   moments, straight from the slumber-party episode), and 思思 (xiexie888888)
   — Mandarin catchphrases from Instagram reels, labelled with hanzi, pinyin,
@@ -25,7 +27,7 @@ python3 -m http.server 8000
   `<audio>` element fallback
 - **Mobile-first design**: big touch targets, tap animations, haptic feedback
   (vibration) on supported devices, safe-area insets for notched phones
-- **Random button** (🎲) that plays a surprise clip
+- **Random button** (🎲) that plays a surprise clip from the active board
 
 ## How the clips were made
 
