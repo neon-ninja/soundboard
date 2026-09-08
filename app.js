@@ -42,6 +42,9 @@
     { id: "pajamas", label: "Still in my pajamas!", emoji: "🩳", group: "sleepy" },
 
     // 🥢 思思 (xiexie888888) — Mandarin + signature English intro
+    { id: "zh-qu-xiang-zeng-xing", label: "去香增腥！对的对的！", pinyin: "qù xiāng zēng xīng!", en: "Remove the flavour, add fishiness!", emoji: "🐟", group: "sisi" },
+    { id: "zh-wo-shi-dijia", label: "我是迪迦！我是迪迦呀！", pinyin: "wǒ shì Díjiā!", en: "I am Ultraman Tiga!", emoji: "🦸", group: "sisi" },
+    { id: "zh-hao-da-de-huo", label: "好大的火呀！", pinyin: "hǎo dà de huǒ ya!", en: "Wow, what a big fire!", emoji: "🔥", group: "sisi" },
     { id: "zh-full-intro", label: "Hey boy, thank you girl…", emoji: "🎤", group: "sisi", en: "Her full signature intro" },
     { id: "zh-hey-boy", label: "Hey boy, thank you girl!", emoji: "👋", group: "sisi", en: "Signature opener" },
     { id: "zh-listen-to-me", label: "Listen to me!", emoji: "👂", group: "sisi", en: "Signature opener, pt. 2" },
