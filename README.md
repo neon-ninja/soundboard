@@ -18,7 +18,7 @@ python3 -m http.server 8000
 
 - **Two swipeable boards** — Aphmau (purple) and 思思 (red-gold) — switch
   via the tabs or by swiping horizontally (CSS scroll-snap)
-- **48 sound clips** organised into sections: the "WHAT THE—?!"
+- **53 sound clips** organised into sections: the "WHAT THE—?!"
   collection, Classics, Maximum Sass, Sleepy Time (sleep & bedtime
   moments, straight from the slumber-party episode), and 思思 (xiexie888888)
   — Mandarin catchphrases from Instagram reels, labelled with hanzi, pinyin,
