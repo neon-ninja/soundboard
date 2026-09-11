@@ -14,13 +14,25 @@ CLIPS = [
  ("zh-zhu-bajie",         "DcItKJCywa4", 77.82, 78.98),
  ("zh-kashi-woshou",      "DcItKJCywa4", 76.00, 77.22),
  ("zh-kashi-zuo",         "Dc0zOnFSVyc", 53.74, 55.12),
- ("zh-qu-xiang-zeng-xing","DcYypNtSDEa", 34.82, 36.62),
+ ("zh-qu-xiang-zeng-xing","DcYypNtSDEa", 34.82, 36.62),   # sung take
  ("zh-gei-ni-chi",        "Dc87tC1Sgxj", 58.55, 59.94),
+ ("zh-wo-shi-dijia",      "Db571mnS4ad", 34.75, 36.55),   # sung take (hummed intro)
+ ("zh-xiexie-guanzhu",    "Dcs3tPNyft1", 1035.12, 1036.66),
+ ("zh-xiexie-xiongdi",    "Dcs3tPNyft1", 755.28, 756.49),
+ ("zh-xiexie-dajia",      "DcnrwfqSgWr", 530.42, 532.52),
+ ("zh-wa-sai",            "DcnrwfqSgWr", 121.20, 122.20),
+ ("zh-chaoji-wudi",       "DcjQiHbyoEd", 264.00, 267.20),
+ ("zh-hao-da-de-huo",      "Dcf1pPSyi8l", 627.52, 628.98),
+ ("zh-shide-shide",       "DcnlNSSytWY", 633.28, 635.10),
+ ("zh-kandaole-ma",       "DctL9n5Sj0V", 314.75, 316.05),
+ ("zh-duoshao-qian",      "DctL9n5Sj0V", 359.53, 360.55),
+ ("zh-gei-dajia-kan",     "DctL9n5Sj0V", 284.70, 285.90),
+ ("zh-hao-xiang-ya",      "Dcgd6JUSUS3", 79.32, 81.55),
 ]
 def groq(fpath):
     b = uuid.uuid4().hex
     body = b""
-    for k, v in [("model","whisper-large-v3"),("response_format","json"),("language","zh"),("prompt","卡卡西，卡西，孙悟空，猪八戒，握手，真乖，去香增腥")]:
+    for k, v in [("model","whisper-large-v3"),("response_format","json"),("language","zh"),("prompt","卡卡西，孙悟空，猪八戒，真乖，去香增腥，我是迪迦，谢谢关注，超级无敌，好大的火呀")]:
         body += f"--{b}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
     body += (f"--{b}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"c.mp3\"\r\nContent-Type: audio/mpeg\r\n\r\n").encode() + open(fpath,"rb").read() + f"\r\n--{b}--\r\n".encode()
     req = urllib.request.Request("https://api.groq.com/openai/v1/audio/transcriptions", data=body,
