@@ -47,12 +47,17 @@ Reels have no captions, so this pipeline transcribes them locally:
 
 1. Download reels with `yt-dlp --cookies <cookies.txt> -a <url-list>`
    (a logged-in Instagram session is required; cookies are never committed).
-2. `transcribe_all.py` — faster-whisper (small, int8, CPU) Mandarin
-   transcription of every downloaded reel, word timestamps included.
+2. `transcribe_groq.py` — Groq-hosted whisper-large-v3 transcription of
+   every downloaded reel (16 kHz mono MP3 uploads, word + segment
+   timestamps). Needs `GROQ_API_KEY`. This replaced the original
+   `transcribe_all.py` (local faster-whisper small/medium on CPU), whose
+   garbled output caused several mis-cut and mislabelled clips.
 3. `mine_phrases.py` — character n-gram mining across all transcripts to
    surface phrases repeated in many reels.
-4. `cut_zh.py` — clip table + ffmpeg cutting (same silence-trim +
-   loudnorm chain as the Aphmau clips).
+4. `cut_groq.py` — clip table cut at large-v3 word boundaries, then each
+   MP3 is sent back through Groq to confirm it transcribes to the intended
+   phrase. (`cut_zh.py` is the older table used with the local models.)
+   `groq_search.py REGEX` greps the transcripts with word-level times.
 5. `verify_wide.py` — sanity-checks a cut by re-transcribing a ±2.5 s
    window around it and asserting the phrase is present; clips that
    failed this check were re-cut from other occurrences or dropped.

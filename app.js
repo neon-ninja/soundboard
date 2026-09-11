@@ -47,7 +47,6 @@
     { id: "zh-qu-xiang-zeng-xing", label: "来！去香增腥！", pinyin: "lái! qù xiāng zēng xīng!", en: "Remove the flavour, add fishiness!", emoji: "🐟", group: "sisi-sig", board: 1 },
     { id: "zh-wo-shi-dijia", label: "我是迪迦呀！", pinyin: "wǒ shì Díjiā ya!", en: "I am Ultraman Tiga!", emoji: "🦸", group: "sisi-sig", board: 1 },
     { id: "zh-hao-da-de-huo", label: "好大的火呀！", pinyin: "hǎo dà de huǒ ya!", en: "Wow, what a big fire!", emoji: "🔥", group: "sisi-sig", board: 1 },
-    { id: "zh-shoot-you", label: "Shoot you to death!", emoji: "🔫", group: "sisi-sig", en: "Her English threat", board: 1 },
     { id: "zh-full-intro", label: "Hey boy, thank you girl…", emoji: "🎤", group: "sisi-sig", en: "Her full signature intro", board: 1 },
     { id: "zh-hey-boy", label: "Hey boy, thank you girl!", emoji: "👋", group: "sisi-sig", en: "Signature opener", board: 1 },
     { id: "zh-listen-to-me", label: "Listen to me!", emoji: "👂", group: "sisi-sig", en: "Signature opener, pt. 2", board: 1 },
@@ -55,9 +54,14 @@
 
     // 🐶 The dogs
     { id: "zh-kakashi", label: "卡卡西是我的孩子", pinyin: "Kǎkǎxī shì wǒ de háizi", en: "Kakashi is my child", emoji: "🐕", group: "sisi-dogs", board: 1 },
-    { id: "zh-kashi-shang", label: "卡西，上！", pinyin: "Kǎxī, shàng!", en: "Kashi, go get 'em!", emoji: "🐾", group: "sisi-dogs", board: 1 },
-    { id: "zh-kashi-zhenbang", label: "卡西真棒！", pinyin: "Kǎxī zhēn bàng!", en: "Kashi, good boy!", emoji: "🦴", group: "sisi-dogs", board: 1 },
-    { id: "zh-sun-wukong", label: "这个是孙悟空", pinyin: "zhège shì Sūn Wùkōng", en: "This one is Sun Wukong", emoji: "🐒", group: "sisi-dogs", board: 1 },
+    { id: "zh-sun-wukong", label: "孙悟空，上！", pinyin: "Sūn Wùkōng, shàng!", en: "Sun Wukong, go!", emoji: "🐒", group: "sisi-dogs", board: 1 },
+    { id: "zh-zhu-bajie", label: "猪八戒，握手！", pinyin: "Zhū Bājiè, wòshǒu!", en: "Zhu Bajie, shake!", emoji: "🐷", group: "sisi-dogs", board: 1 },
+    { id: "zh-kashi-shang", label: "卡西，上！", pinyin: "Kǎxī, shàng!", en: "Kashi, go!", emoji: "🐾", group: "sisi-dogs", board: 1 },
+    { id: "zh-kashi-zuo", label: "卡西，坐！", pinyin: "Kǎxī, zuò!", en: "Kashi, sit!", emoji: "🪑", group: "sisi-dogs", board: 1 },
+    { id: "zh-kashi-woshou", label: "卡西，握手！", pinyin: "Kǎxī, wòshǒu!", en: "Kashi, shake!", emoji: "🤝", group: "sisi-dogs", board: 1 },
+    { id: "zh-zhen-guai", label: "诶，真乖！", pinyin: "éi, zhēn guāi!", en: "Aww, good dog!", emoji: "🦴", group: "sisi-dogs", board: 1 },
+    { id: "zh-guai-guai-guai", label: "乖乖乖！", pinyin: "guāi guāi guāi!", en: "Good, good, good boy!", emoji: "💕", group: "sisi-dogs", board: 1 },
+    { id: "zh-kashi-zhenbang", label: "真棒，卡卡西！", pinyin: "zhēn bàng, Kǎkǎxī!", en: "Well done, Kakashi!", emoji: "🏅", group: "sisi-dogs", board: 1 },
 
     // 🥢 Kitchen & live
     { id: "zh-hao-xiang-ya", label: "好香呀", pinyin: "hǎo xiāng ya", en: "Smells SO good!", emoji: "🍜", group: "sisi-live", board: 1 },
