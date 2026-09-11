@@ -44,8 +44,8 @@
 
     // ═══ Board 1: 思思 (xiexie888888) ═══
     // ⚡ Signature moves
-    { id: "zh-qu-xiang-zeng-xing", label: "来！去香增腥！", pinyin: "lái! qù xiāng zēng xīng!", en: "Remove the flavour, add fishiness!", emoji: "🐟", group: "sisi-sig", board: 1 },
-    { id: "zh-wo-shi-dijia", label: "我是迪迦！", pinyin: "wǒ shì Díjiā!", en: "I am Ultraman Tiga!", emoji: "🦸", group: "sisi-sig", board: 1 },
+    { id: "zh-qu-xiang-zeng-xing", label: "去香增腥～", pinyin: "qù xiāng zēng xīng~", en: "Remove the flavour, add fishiness!", emoji: "🐟", group: "sisi-sig", board: 1 },
+    { id: "zh-wo-shi-dijia", label: "嘿～我是迪迦！", pinyin: "hēi~ wǒ shì Díjiā!", en: "I am Ultraman Tiga!", emoji: "🦸", group: "sisi-sig", board: 1 },
     { id: "zh-hao-da-de-huo", label: "好大的火呀！", pinyin: "hǎo dà de huǒ ya!", en: "Wow, what a big fire!", emoji: "🔥", group: "sisi-sig", board: 1 },
     { id: "zh-full-intro", label: "Hey boy, thank you girl…", emoji: "🎤", group: "sisi-sig", en: "Her full signature intro", board: 1 },
     { id: "zh-hey-boy", label: "Hey boy, thank you girl!", emoji: "👋", group: "sisi-sig", en: "Signature opener", board: 1 },
