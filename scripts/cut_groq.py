@@ -14,7 +14,7 @@ CLIPS = [
  ("zh-zhu-bajie",         "DcItKJCywa4", 77.82, 78.98),
  ("zh-kashi-woshou",      "DcItKJCywa4", 76.00, 77.22),
  ("zh-kashi-zuo",         "Dc0zOnFSVyc", 53.74, 55.12),
- ("zh-qu-xiang-zeng-xing","DcBptzES8hJ", 11.18, 12.50),
+ ("zh-qu-xiang-zeng-xing","DcYypNtSDEa", 34.82, 36.62),
  ("zh-gei-ni-chi",        "Dc87tC1Sgxj", 58.55, 59.94),
 ]
 def groq(fpath):
