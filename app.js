@@ -89,6 +89,15 @@
     { id: "game-build-finish", label: "Build complete!", emoji: "🏗️", group: "asylum-sfx", board: 2, localOnly: true },
     { id: "game-click", label: "Click", emoji: "🔘", group: "asylum-sfx", board: 2, localOnly: true },
     { id: "game-map-unlock", label: "Map unlocked!", emoji: "🗺️", group: "asylum-sfx", board: 2, localOnly: true },
+
+    // ═══ Board 3: Lore Accurate Ganondorf (Udge) — Latin Spanish dub + Suavemente ═══
+    { id: "ganon-suavemente", label: "¡Suavemente!", en: "Softly! (Elvis Crespo)", emoji: "💃", group: "ganon-song", board: 3 },
+    { id: "ganon-suavemente-besame", label: "Suavemente, bésame…", en: "Softly, kiss me…", emoji: "💋", group: "ganon-song", board: 3 },
+    { id: "ganon-a-ver-si-te-gusta", label: "¡A ver si te gusta esto!", en: "Let's see if you like THIS!", emoji: "⚡", group: "ganon-lines", board: 3 },
+    { id: "ganon-toma", label: "¡Toma!", en: "Take this!", emoji: "👊", group: "ganon-lines", board: 3 },
+    { id: "ganon-ni-siquiera", label: "Ni siquiera he comenzado", en: "I haven't even begun", emoji: "😈", group: "ganon-lines", board: 3 },
+    { id: "ganon-que-pasa", label: "¿Qué pasa?", en: "What's the matter?", emoji: "🤨", group: "ganon-lines", board: 3 },
+    { id: "ganon-tienes-miedo", label: "¿Tienes miedo?", en: "Scared?", emoji: "😱", group: "ganon-lines", board: 3 },
   ];
 
   const grids = {
@@ -101,8 +110,10 @@
     "sisi-dogs": document.getElementById("grid-sisi-dogs"),
     asylum: document.getElementById("grid-asylum"),
     "asylum-sfx": document.getElementById("grid-asylum-sfx"),
+    "ganon-song": document.getElementById("grid-ganon-song"),
+    "ganon-lines": document.getElementById("grid-ganon-lines"),
   };
-  const NUM_BOARDS = 3;
+  const NUM_BOARDS = 4;
 
   let audioCtx = null;
   const buffers = new Map();
@@ -209,6 +220,7 @@
     tabs.forEach((t, j) => t.classList.toggle("active", j === i));
     document.body.classList.toggle("theme-sisi", i === 1);
     document.body.classList.toggle("theme-asylum", i === 2);
+    document.body.classList.toggle("theme-ganon", i === 3);
   }
 
   tabs.forEach((tab) =>

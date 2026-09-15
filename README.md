@@ -16,13 +16,16 @@ python3 -m http.server 8000
 
 ## Features
 
-- **Two swipeable boards** — Aphmau (purple) and 思思 (red-gold) — switch
+- **Four swipeable boards** — Aphmau (purple), 思思 (red-gold), Last Asylum
+  (teal, local-only assets) and Lore Accurate Ganondorf (crimson) — switch
   via the tabs or by swiping horizontally (CSS scroll-snap)
-- **53 sound clips** organised into sections: the "WHAT THE—?!"
+- **63 bundled sound clips** organised into sections: the "WHAT THE—?!"
   collection, Classics, Maximum Sass, Sleepy Time (sleep & bedtime
   moments, straight from the slumber-party episode), and 思思 (xiexie888888)
   — Mandarin catchphrases from Instagram reels, labelled with hanzi, pinyin,
-  and English, transcribed with faster-whisper
+  and English, transcribed with Groq whisper-large-v3; and Udge's *Lore Accurate
+  Ganondorf* — the Latin Spanish dub lines (with English translations) plus
+  "¡Suavemente!"
 - **Web Audio API** playback for low-latency, overlapping sounds, with an
   `<audio>` element fallback
 - **Mobile-first design**: big touch targets, tap animations, haptic feedback

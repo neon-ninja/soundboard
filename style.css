@@ -167,6 +167,40 @@ body.theme-asylum .fab {
   box-shadow: 0 0 0 2px rgba(111, 227, 176, 0.6), 0 8px 24px var(--shadow);
 }
 
+.board-ganon {
+  --accent: #ffb020;
+  --accent-2: #e03a2f;
+  --card: #3a1616;
+  --card-hi: #4d1f1f;
+}
+
+body.theme-ganon {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(224, 58, 47, 0.18), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(255, 176, 32, 0.12), transparent 60%),
+    linear-gradient(180deg, #2a0f0f, #140808 55%);
+  background-attachment: fixed;
+}
+
+body.theme-ganon .tab.active {
+  background: linear-gradient(135deg, #e03a2f, #ffb020);
+  box-shadow: 0 4px 14px rgba(224, 58, 47, 0.4);
+}
+
+body.theme-ganon .fab {
+  background: linear-gradient(150deg, #e03a2f, #ffb020);
+  box-shadow: 0 8px 24px rgba(224, 58, 47, 0.4);
+}
+
+.board-ganon .grid-featured .sound-btn {
+  background: linear-gradient(160deg, #5a1d1d, #3a1212);
+  border-color: rgba(255, 176, 32, 0.45);
+}
+
+.board-ganon .sound-btn.playing {
+  box-shadow: 0 0 0 2px rgba(255, 176, 32, 0.6), 0 8px 24px var(--shadow);
+}
+
 .sound-btn.missing {
   opacity: 0.45;
   cursor: not-allowed;
