@@ -116,37 +116,85 @@
   const NUM_BOARDS = 4;
 
   let audioCtx = null;
-  const buffers = new Map();
+  const buffers = new Map();   // id -> decoded AudioBuffer
+  const pending = new Map();   // id -> in-flight decode promise
   const fallbackPool = new Map();
 
-  function ensureContext() {
+  function getContext() {
     if (!audioCtx) {
       const Ctx = window.AudioContext || window.webkitAudioContext;
-      if (Ctx) audioCtx = new Ctx();
+      if (Ctx) {
+        try { audioCtx = new Ctx({ latencyHint: "interactive" }); }
+        catch (err) { audioCtx = new Ctx(); }
+      }
     }
-    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
     return audioCtx;
   }
 
-  async function loadBuffer(id) {
-    if (buffers.has(id)) return buffers.get(id);
-    const ctx = ensureContext();
-    if (!ctx) return null;
+  // Resolves once the context is actually running. Mobile browsers only let
+  // this succeed from inside a user gesture, so it's kicked off synchronously
+  // in the pointerdown/click handlers below.
+  function resumeContext() {
+    const ctx = getContext();
+    if (!ctx) return Promise.resolve(null);
+    if (ctx.state === "running" || typeof ctx.resume !== "function") return Promise.resolve(ctx);
+    return ctx.resume().then(() => ctx, () => ctx);
+  }
+
+  // Unlock audio on the very first touch, before the click fires: resume the
+  // context and (for iOS) start a silent source inside the gesture. By the
+  // time the tap becomes a click the output clock is already running, so
+  // the first real clip doesn't lose its opening samples.
+  function unlock() {
+    const ctx = getContext();
+    if (!ctx || ctx.state === "running") return;
+    resumeContext();
     try {
-      const res = await fetch(`sounds/${id}.mp3`);
-      const data = await res.arrayBuffer();
-      const buf = await ctx.decodeAudioData(data);
-      buffers.set(id, buf);
-      return buf;
-    } catch (err) {
-      return null;
-    }
+      const src = ctx.createBufferSource();
+      src.buffer = ctx.createBuffer(1, 1, 22050);
+      src.connect(ctx.destination);
+      src.start(0);
+    } catch (err) { /* ignore */ }
+  }
+  ["pointerdown", "touchstart", "keydown"].forEach((ev) =>
+    window.addEventListener(ev, unlock, { capture: true, passive: true })
+  );
+
+  function loadBuffer(id) {
+    if (buffers.has(id)) return Promise.resolve(buffers.get(id));
+    if (pending.has(id)) return pending.get(id);
+    const ctx = getContext();
+    if (!ctx) return Promise.resolve(null);
+    const p = fetch(`sounds/${id}.mp3`)
+      .then((res) => (res.ok ? res.arrayBuffer() : Promise.reject(new Error(String(res.status)))))
+      .then((data) => new Promise((resolve, reject) => {
+        // Callback form for older Safari, which doesn't return a promise
+        const ret = ctx.decodeAudioData(data, resolve, reject);
+        if (ret && typeof ret.then === "function") ret.then(resolve, reject);
+      }))
+      .then((buf) => { buffers.set(id, buf); return buf; })
+      .catch(() => null)
+      .finally(() => pending.delete(id));
+    pending.set(id, p);
+    return p;
+  }
+
+  // Fetch + decode clips a few at a time so every button is ready before
+  // it's pressed (decoding doesn't need a user gesture, only playback does).
+  function preload(ids) {
+    const queue = ids.slice();
+    const next = () => {
+      const id = queue.shift();
+      if (id) loadBuffer(id).then(next, next);
+    };
+    for (let i = 0; i < 4; i++) next();
   }
 
   function playFallback(id, onEnd) {
     let el = fallbackPool.get(id);
     if (!el) {
       el = new Audio(`sounds/${id}.mp3`);
+      el.preload = "auto";
       fallbackPool.set(id, el);
     }
     el.currentTime = 0;
@@ -159,14 +207,19 @@
     btn.classList.add("playing");
     const done = () => btn.classList.remove("playing");
 
+    const wasRunning = !!audioCtx && audioCtx.state === "running";
+    const ready = resumeContext();            // synchronously, inside the gesture
     const buf = await loadBuffer(id);
-    if (buf && audioCtx) {
-      const src = audioCtx.createBufferSource();
+    const ctx = buf ? await ready : null;     // wait for the output clock to run
+    if (buf && ctx && ctx.state === "running") {
+      const src = ctx.createBufferSource();
       src.buffer = buf;
-      src.connect(audioCtx.destination);
+      src.connect(ctx.destination);
       src.onended = done;
-      src.start(0);
-      setTimeout(done, buf.duration * 1000 + 250);
+      // If we only just resumed, give the hardware a moment to spin up so
+      // the first samples aren't rendered into the void.
+      src.start(wasRunning ? 0 : ctx.currentTime + 0.05);
+      setTimeout(done, buf.duration * 1000 + 300);
     } else {
       playFallback(id, done);
     }
@@ -208,6 +261,7 @@
   ).then((results) => {
     const note = document.getElementById("asylum-note");
     if (note && results.some((ok) => !ok)) note.hidden = false;
+    preload(allButtons.filter((b) => b.sound.localOnly && !b.missing).map((b) => b.sound.id));
   });
 
   // ── Board switching: scroll-snap swiping + tabs kept in sync ──
@@ -248,11 +302,12 @@
     play(pick.sound.id, pick.btn);
   });
 
-  // Warm the cache after the first user gesture (autoplay policies require one)
-  const warm = () => {
-    ensureContext();
-    allButtons.forEach((b) => { if (!b.missing) loadBuffer(b.sound.id); });
-    window.removeEventListener("pointerdown", warm);
-  };
-  window.addEventListener("pointerdown", warm, { once: true });
+  // Decode every bundled clip up front (active board first) so the first
+  // press plays instantly and in full.
+  preload(
+    allButtons
+      .filter((b) => !b.sound.localOnly)
+      .sort((a, b) => (a.sound.board === activeBoard ? 0 : 1) - (b.sound.board === activeBoard ? 0 : 1))
+      .map((b) => b.sound.id)
+  );
 })();

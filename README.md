@@ -27,7 +27,9 @@ python3 -m http.server 8000
   Ganondorf* — the Latin Spanish dub lines (with English translations) plus
   "¡Suavemente!"
 - **Web Audio API** playback for low-latency, overlapping sounds, with an
-  `<audio>` element fallback
+  `<audio>` element fallback. Every clip is fetched and decoded at page load
+  and the audio context is unlocked on the first touch, so even the very
+  first press plays instantly and in full
 - **Mobile-first design**: big touch targets, tap animations, haptic feedback
   (vibration) on supported devices, safe-area insets for notched phones
 - **Random button** (🎲) that plays a surprise clip from the active board
